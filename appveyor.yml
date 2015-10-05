@@ -1,15 +1,16 @@
 # see: http://www.appveyor.com/docs/build-configuration#configuring-build
 
-version: 1.2.{build}
+# scripts that are called at very beginning, before repo cloning
+init:
+- cmd: "set appVeyorBuildVersion=%appveyor_build_version%\necho appVeyorBuildVersion:%appVeyorBuildVersion% \n\necho repo branch:%APPVEYOR_REPO_BRANCH%\n\nset branch=%APPVEYOR_REPO_BRANCH%\necho branch:%branch%\n\nset gitVersion=%branch:~-3%\necho gitversion:%gitVersion%\n\nset version=%gitVersion%.%APPVEYOR_BUILD_NUMBER%\necho %version%\n\n"
+
+version: '%version%'
 branches:
   only:
   - /release.*/
   - /hotfix.*/
 configuration: Release
 
-# scripts that are called at very beginning, before repo cloning
-init:
-- cmd: "set appVeyorBuildVersion=%appveyor_build_version%\necho appVeyorBuildVersion:%appVeyorBuildVersion% \n\necho repo branch:%APPVEYOR_REPO_BRANCH%\n\nset branch=%APPVEYOR_REPO_BRANCH%\necho branch:%branch%\n\nset gitVersion=%branch:~-3%\necho gitversion:%gitVersion%\n\nset version=%gitVersion%.%APPVEYOR_BUILD_NUMBER%\necho %version%\n\nappveyor UpdateBuild -Version "%version%""
 
 assembly_info:
   patch: true
