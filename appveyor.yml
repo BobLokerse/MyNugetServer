@@ -1,0 +1,24 @@
+# see: http://www.appveyor.com/docs/build-configuration#configuring-build
+
+# scripts that are called at very beginning, before repo cloning
+init:
+- cmd: "set appVeyorBuildVersion=%appveyor_build_version%\necho appVeyorBuildVersion:%appVeyorBuildVersion% \n\nset branch=%APPVEYOR_REPO_BRANCH%\necho branch:%branch%\n\nset gitVersion=%branch:~-3%\necho gitversion:%gitVersion%\n\nset newVersion=%gitVersion%.%APPVEYOR_BUILD_NUMBER%\necho %newVersion%\n\n"
+- cmd: appveyor UpdateBuild -Version "%newVersion%"
+
+
+branches:
+  only:
+  - /release.*/
+  - /hotfix.*/
+configuration: Release
+
+
+assembly_info:
+  patch: true
+  file: '**\AssemblyInfo.*'
+  assembly_version: '{version}'
+  assembly_file_version: '{version}'
+  assembly_informational_version: '{version}'
+build_script:
+- cmd: "echo Building version:%appveyor_build_version%"
+- cmd: "nuget restore\nmsbuild MyNugetServerSolution.sln /t:build /p:Configuration=Release /p:RunOctopack=true /p:OctoPackPublishPackageToHttp=http://devpccloud.cloudapp.net/nuget/packages /p:OctoPackPublishApiKey=API-9DUCGSPLW1AHA4LBQZSHWBS8BS"
