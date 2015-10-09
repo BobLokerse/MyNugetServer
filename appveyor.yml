@@ -10,7 +10,7 @@ init:
 - cmd: set gitVersion=%branch:~-3%
 - echo: gitversion:%gitVersion%
 - cmd: set newVersion=%gitVersion%.%APPVEYOR_BUILD_NUMBER%
-- echo: %newVersion%\n\n"
+- echo: %newVersion%
 - cmd: appveyor UpdateBuild -Version "%newVersion%"
 
 
