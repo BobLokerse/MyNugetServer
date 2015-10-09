@@ -2,6 +2,7 @@
 
 # scripts that are called at very beginning, before repo cloning
 init:
+- cmd: "echo Info - appVeyor build version is adjusted by a script in the yml file. This also patched the Assembly version."
 - cmd: "set appVeyorBuildVersion=%appveyor_build_version%\necho appVeyorBuildVersion:%appVeyorBuildVersion% \n\nset branch=%APPVEYOR_REPO_BRANCH%\necho branch:%branch%\n\nset gitVersion=%branch:~-3%\necho gitversion:%gitVersion%\n\nset newVersion=%gitVersion%.%APPVEYOR_BUILD_NUMBER%\necho %newVersion%\n\n"
 - cmd: appveyor UpdateBuild -Version "%newVersion%"
 
