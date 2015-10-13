@@ -5,6 +5,16 @@ VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyNugetServer", "MyNugetServer\MyNugetServer.csproj", "{1E026C52-868F-485F-B131-F6C3E261D07D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{99C5CFFE-ECF5-4F9F-AFF4-F8E8EBACC58C}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\packages.config = .nuget\packages.config
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AppVeyorOverrides", "AppVeyorOverrides", "{7809E5B1-B0D4-44EF-B097-48FD893B3DD9}"
+	ProjectSection(SolutionItems) = preProject
+		packages\AppVeyorYml.1.3.0\..\..\appveyor.yml = packages\AppVeyorYml.1.3.0\..\..\appveyor.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
