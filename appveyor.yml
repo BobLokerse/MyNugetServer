@@ -8,9 +8,8 @@
       - /release.*/
       - /hotfix.*/
 
-   build_script:
-   - echo Building version:%appveyor_build_version%
-   - cmd: msbuild /t:build /p:Configuration=Release /p:RunOctopack=false /p:OctoPackPublishPackageToHttp=http://youroctopusserverurl/nuget/packages /p:OctoPackPublishApiKey=API-key
+  build_script:
+     - cmd: msbuild /t:build /p:Configuration=Release /p:RunOctopack=false /p:OctoPackPublishPackageToHttp=http://youroctopusserverurl/nuget/packages /p:OctoPackPublishApiKey=API-key
 
 
 
@@ -20,7 +19,6 @@
     only:
       - /develop.*/
 
-   build_script:
-   - echo Building version:%appveyor_build_version%
-   - cmd: msbuild /t:build  /p:Configuration=Debug
+  build_script:
+     - cmd: msbuild /t:build /p:Configuration=Release
 
