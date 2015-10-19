@@ -1,20 +1,5 @@
 # see: http://www.appveyor.com/docs/build-configuration#configuring-build
 
-# scripts that are called at very beginning, before repo cloning
-init:
-- echo Info - appVeyor build version is adjusted by a script in the yml file. This also patches the Assembly version.
-- cmd: set appVeyorBuildVersion=%appveyor_build_version%
-- echo appVeyorBuildVersion:%appVeyorBuildVersion% 
-- cmd: set branch=%APPVEYOR_REPO_BRANCH%
-- echo branch:%branch%
-- cmd: set gitVersion=%branch:~-3%
-- echo gitversion:%gitVersion%
-- cmd: set newVersion=%gitVersion%.%APPVEYOR_BUILD_NUMBER%
-- echo %newVersion%
-- cmd: appveyor UpdateBuild -Version "%newVersion%"
-
-
-
 
 # configuration for deploy candidates (release / hotfix branches)
 - 
@@ -23,22 +8,10 @@ init:
       - /release.*/
       - /hotfix.*/
 
-   configuration: Release
-
-
-   assembly_info:
-     patch: true
-     file: '**\AssemblyInfo.*'
-     assembly_version: '{version}'
-     assembly_file_version: '{version}'
-     assembly_informational_version: '{version}'
    build_script:
    - echo Building version:%appveyor_build_version%
-   - cmd: msbuild /t:build /p:RunOctopack=false /p:OctoPackPublishPackageToHttp=http://youroctopusserverurl/nuget/packages /p:OctoPackPublishApiKey=API-key
+   - cmd: msbuild /t:build /p:Configuration=Release /p:RunOctopack=false /p:OctoPackPublishPackageToHttp=http://youroctopusserverurl/nuget/packages /p:OctoPackPublishApiKey=API-key
 
-   # scripts to run before build
-  before_build:
-    nuget restore
 
 
 # configuration for checking integration builds (develop branch; without OctoPack) 
@@ -47,21 +20,7 @@ init:
     only:
       - /develop.*/
 
-   configuration: Debug
+   build_script:
+   - echo Building version:%appveyor_build_version%
+   - cmd: msbuild /t:build  /p:Configuration=Debug
 
-
-    #assembly_info:
-    #  patch: true
-    #  file: '**\AssemblyInfo.*'
-    #  assembly_version: '{version}'
-    #  assembly_file_version: '{version}'
-    #  assembly_informational_version: '{version}'
-
-    build_script:
-    - echo Building version:%appveyor_build_version%
-    - cmd: msbuild /t:build 
-
-
-  # scripts to run before build
-  before_build:
-    nuget restore
