@@ -43,7 +43,7 @@
     only:
       - /develop.*/
 
-	    # scripts that are called at very beginning, before repo cloning
+  # scripts that are called at very beginning, before repo cloning
   init:
   - echo Info - appVeyor build version is adjusted by a script in the yml file. This also patches the Assembly version.
   - cmd: set appVeyorBuildVersion=%appveyor_build_version%
