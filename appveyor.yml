@@ -15,12 +15,11 @@ init:
 
 
 # configuration for deploy candidates (release / hotfix branches)
--
-	branches:
-	  only:
-	  - /release.*/
-	  - /hotfix.*/
-	configuration: Release
+branches:
+	only:
+	- /release.*/
+	- /hotfix.*/
+configuration: Release
 
 
 assembly_info:
@@ -36,11 +35,10 @@ build_script:
 
 
 # configuration for checking integration builds (develop branch; without OctoPack) 
--
-	branches:
-	  only:
-	  - /develop.*/
-	configuration: Debug
+branches:
+	only:
+	- /develop.*/
+configuration: Debug
 
 
 #assembly_info:
