@@ -43,8 +43,9 @@
     assembly_informational_version: '{version}'
 
   build_script:
-    - echo Building version:%appveyor_build_version%
-    - cmd: msbuild /t:build /p:RunOctopack=false /p:OctoPackPublishPackageToHttp=http://youroctopusserverurl/nuget/packages /p:OctoPackPublishApiKey=API-key
+    - ps: |
+	  write-host "Building version:$appveyor_build_version"
+      msbuild --% /t:build /p:RunOctopack=false /p:OctoPackPublishPackageToHttp=http://youroctopusserverurl/nuget/packages /p:OctoPackPublishApiKey=API-key
   
   before_build:
     nuget restore
@@ -70,8 +71,9 @@
     assembly_informational_version: '{version}'
 
   build_script:
-    - echo Building version:%appveyor_build_version%
-    - cmd: msbuild /t:build 
+    - ps: |
+	  write-host "Building version:$appveyor_build_version"
+      msbuild --% /t:build 
 
   before_build:
     nuget restore
