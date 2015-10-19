@@ -17,14 +17,14 @@
 
 
 # configuration for checking integration builds (develop branch; without OctoPack) 
-- 
-  branches:
-    only:
-      - /develop.*/
-
-  build_script:
-     - cmd: msbuild /t:build /p:Configuration=Release
-
-  # scripts to run before build
-  before_build:
-    nuget restore
+#- 
+#  branches:
+#    only:
+#      - /develop.*/
+#
+#  build_script:
+#     - cmd: msbuild /t:build /p:Configuration=Release
+#
+#  # scripts to run before build
+#  before_build:
+#    nuget restore
