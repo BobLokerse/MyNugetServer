@@ -29,6 +29,7 @@
         $newVersion="$gitVersion.$env:APPVEYOR_BUILD_NUMBER"
         
         write-host "Update appveyor build version to:$newVersion"
+        $env:appveyor_build_version="$newVersion"
         appveyor UpdateBuild -Version "$newVersion"
       }
       gitVersion
