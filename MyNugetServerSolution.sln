@@ -12,6 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AppVeyorOverrides", "AppVey
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{E392244E-174A-4B2B-A71B-5E7B3D007E54}"
 	ProjectSection(SolutionItems) = preProject
+		.nuget\nuget.config = .nuget\nuget.config
 		.nuget\packages.config = .nuget\packages.config
 	EndProjectSection
 EndProject
