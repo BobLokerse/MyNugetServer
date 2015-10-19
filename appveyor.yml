@@ -16,23 +16,23 @@
   # scripts that are called at very beginning, before repo cloning
   init:
   - ps: |
-	function gitVersion(){
-		write-host "This gets the version nr from the end of the git release branch (e.g.: v1.4). And updates the appVersion build nr with that."
+      function gitVersion(){
+        write-host "This gets the version nr from the end of the git release branch (e.g.: v1.4). And updates the appVersion build nr with that."
 
-		$branch=$env:APPVEYOR_REPO_BRANCH
-
-		$posAfterVchar = $branch.LastIndexOf("v") + 1
-		$versionLength = $branch.Length - $posAfterVchar
-
-		$gitVersion=$branch.substring($posAfterVchar, $versionLength)
-
-		$newVersion="$gitVersion.$env:APPVEYOR_BUILD_NUMBER"
-		
-		write-host "Update appveyor build version to:$newVersion"
-		appveyor UpdateBuild -Version "$newVersion"
-	}
-	gitVersion
-	
+        $branch=$env:APPVEYOR_REPO_BRANCH
+    
+        $posAfterVchar = $branch.LastIndexOf("v") + 1
+        $versionLength = $branch.Length - $posAfterVchar
+        
+        $gitVersion=$branch.substring($posAfterVchar, $versionLength)
+        
+        $newVersion="$gitVersion.$env:APPVEYOR_BUILD_NUMBER"
+        
+        write-host "Update appveyor build version to:$newVersion"
+        appveyor UpdateBuild -Version "$newVersion"
+      }
+      gitVersion
+  
 
   assembly_info:
     patch: true
