@@ -14,8 +14,11 @@ init:
 - cmd: appveyor UpdateBuild -Version "%newVersion%"
 
 
+
+
 # configuration for deploy candidates (release / hotfix branches)
-- branches:
+- 
+  branches:
     only:
       - /release.*/
       - /hotfix.*/
@@ -31,25 +34,34 @@ init:
      assembly_informational_version: '{version}'
    build_script:
    - echo Building version:%appveyor_build_version%
-   - cmd: nuget restore
    - cmd: msbuild /t:build /p:RunOctopack=false /p:OctoPackPublishPackageToHttp=http://youroctopusserverurl/nuget/packages /p:OctoPackPublishApiKey=API-key
+
+   # scripts to run before build
+  before_build:
+    nuget restore
 
 
 # configuration for checking integration builds (develop branch; without OctoPack) 
-- branches:
+- 
+  branches:
     only:
       - /develop.*/
 
    configuration: Debug
 
 
-#assembly_info:
-#  patch: true
-#  file: '**\AssemblyInfo.*'
-#  assembly_version: '{version}'
-#  assembly_file_version: '{version}'
-#  assembly_informational_version: '{version}'
+    #assembly_info:
+    #  patch: true
+    #  file: '**\AssemblyInfo.*'
+    #  assembly_version: '{version}'
+    #  assembly_file_version: '{version}'
+    #  assembly_informational_version: '{version}'
+
     build_script:
     - echo Building version:%appveyor_build_version%
-    - cmd: nuget restore
     - cmd: msbuild /t:build 
+
+
+  # scripts to run before build
+  before_build:
+    nuget restore
