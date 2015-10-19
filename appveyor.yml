@@ -16,11 +16,11 @@ init:
 
 # configuration for deploy candidates (release / hotfix branches)
 -
-branches:
-  only:
-  - /release.*/
-  - /hotfix.*/
-configuration: Release
+	branches:
+	  only:
+	  - /release.*/
+	  - /hotfix.*/
+	configuration: Release
 
 
 assembly_info:
@@ -32,24 +32,24 @@ assembly_info:
 build_script:
 - echo Building version:%appveyor_build_version%
 - cmd: nuget restore
-- cmd: msbuild /t:build /p:Configuration=Release /p:RunOctopack=true /p:OctoPackPublishPackageToHttp=http://youroctopusserverurl/nuget/packages /p:OctoPackPublishApiKey=API-key
+- cmd: msbuild /t:build /p:RunOctopack=false /p:OctoPackPublishPackageToHttp=http://youroctopusserverurl/nuget/packages /p:OctoPackPublishApiKey=API-key
 
 
 # configuration for checking integration builds (develop branch; without OctoPack) 
 -
-branches:
-  only:
-  - /develop.*/
-configuration: Release
+	branches:
+	  only:
+	  - /develop.*/
+	configuration: Debug
 
 
-assembly_info:
-  patch: true
-  file: '**\AssemblyInfo.*'
-  assembly_version: '{version}'
-  assembly_file_version: '{version}'
-  assembly_informational_version: '{version}'
+#assembly_info:
+#  patch: true
+#  file: '**\AssemblyInfo.*'
+#  assembly_version: '{version}'
+#  assembly_file_version: '{version}'
+#  assembly_informational_version: '{version}'
 build_script:
 - echo Building version:%appveyor_build_version%
 - cmd: nuget restore
-- cmd: msbuild /t:build /p:Configuration=Release
+- cmd: msbuild /t:build 
