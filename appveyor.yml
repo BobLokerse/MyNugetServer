@@ -44,8 +44,8 @@
 
   build_script:
     - ps: |
-        write-host "Building version:$appveyor_build_version"
-        msbuild --% /t:build /p:RunOctopack=false /p:OctoPackPublishPackageToHttp=http://youroctopusserverurl/nuget/packages /p:OctoPackPublishApiKey=API-key
+        write-host "Building version:$env:appveyor_build_version"
+        msbuild --% /t:build /p:RunOctopack=true /p:OctoPackPublishPackageToHttp=http://youroctopusserverurl/nuget/packages /p:OctoPackPublishApiKey=API-key
   
   before_build:
     nuget restore
@@ -72,7 +72,7 @@
 
   build_script:
     - ps: |
-        write-host "Building version:$appveyor_build_version"
+        write-host "Building version:$env:appveyor_build_version"
         msbuild --% /t:build 
 
   before_build:
