@@ -43,17 +43,11 @@
      assembly_informational_version: '{version}'
 
   build_script:
-<<<<<<< HEAD
-   - echo Building version:%appveyor_build_version%
-   - cmd: msbuild /t:build /p:RunOctopack=false /p:OctoPackPublishPackageToHttp=http://youroctopusserverurl/nuget/packages /p:OctoPackPublishApiKey=API-key
-
-  # scripts to run before build
-=======
     - ps: |
         write-host "Building version:$env:appveyor_build_version"
-        msbuild --% /t:build /p:RunOctopack=true /p:OctoPackPublishPackageToHttp=http://youroctopusserverurl/nuget/packages /p:OctoPackPublishApiKey=API-key
+        msbuild --% /t:build /p:RunOctopack=false /p:OctoPackPublishPackageToHttp=http://youroctopusserverurl/nuget/packages /p:OctoPackPublishApiKey=API-key
   
->>>>>>> release.deploy/v1.71
+
   before_build:
     nuget restore
 
