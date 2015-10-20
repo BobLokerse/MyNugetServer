@@ -1,6 +1,6 @@
 # see: http://www.appveyor.com/docs/build-configuration#configuring-build
 
-# Two configurations: Forthe develop branch,and for the release & hotfix branches
+# Two configurations: For the develop branch,and for the release & hotfix branches
 # The config for develop does not push the package for deployment, just checking that it builds.
 
 
@@ -15,16 +15,25 @@
 
   # scripts that are called at very beginning, before repo cloning
   init:
-  - echo Info - appVeyor build version is adjusted by a script in the yml file. This also patches the Assembly version.
-  - cmd: set appVeyorBuildVersion=%appveyor_build_version%
-  - echo appVeyorBuildVersion:%appVeyorBuildVersion% 
-  - cmd: set branch=%APPVEYOR_REPO_BRANCH%
-  - echo branch:%branch%
-  - cmd: set gitVersion=%branch:~-3%
-  - echo gitversion:%gitVersion%
-  - cmd: set newVersion=%gitVersion%.%APPVEYOR_BUILD_NUMBER%
-  - echo %newVersion%
-  - cmd: appveyor UpdateBuild -Version "%newVersion%"
+  - ps: |
+      function gitVersion(){
+        write-host "This gets the version nr from the end of the git release branch (e.g.: v1.4). And updates the appVersion build nr with that."
+
+        $branch=$env:APPVEYOR_REPO_BRANCH
+    
+        $posAfterVchar = $branch.LastIndexOf("v") + 1
+        $versionLength = $branch.Length - $posAfterVchar
+        
+        $gitVersion=$branch.substring($posAfterVchar, $versionLength)
+        
+        $newVersion="$gitVersion.$env:APPVEYOR_BUILD_NUMBER"
+        
+        write-host "Update appveyor build version to:$newVersion"
+        $env:appveyor_build_version="$newVersion"
+        appveyor UpdateBuild -Version "$newVersion"
+      }
+      gitVersion
+  
 
   assembly_info:
      patch: true
@@ -34,10 +43,17 @@
      assembly_informational_version: '{version}'
 
   build_script:
+<<<<<<< HEAD
    - echo Building version:%appveyor_build_version%
    - cmd: msbuild /t:build /p:RunOctopack=false /p:OctoPackPublishPackageToHttp=http://youroctopusserverurl/nuget/packages /p:OctoPackPublishApiKey=API-key
 
   # scripts to run before build
+=======
+    - ps: |
+        write-host "Building version:$env:appveyor_build_version"
+        msbuild --% /t:build /p:RunOctopack=true /p:OctoPackPublishPackageToHttp=http://youroctopusserverurl/nuget/packages /p:OctoPackPublishApiKey=API-key
+  
+>>>>>>> release.deploy/v1.71
   before_build:
     nuget restore
 
@@ -62,10 +78,9 @@
       assembly_informational_version: '{version}'
 
   build_script:
-    - echo Building version:%appveyor_build_version%
-    - cmd: msbuild /t:build 
+    - ps: |
+        write-host "Building version:$env:appveyor_build_version"
+        msbuild --% /t:build 
 
-
-  # scripts to run before build
   before_build:
     nuget restore
