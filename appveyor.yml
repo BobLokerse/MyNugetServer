@@ -45,7 +45,7 @@
   build_script:
     - ps: |
         write-host "Building version:$env:appveyor_build_version"
-        msbuild --% /t:build /p:RunOctopack=false /p:OctoPackPublishPackageToHttp=http://youroctopusserverurl/nuget/packages /p:OctoPackPublishApiKey=API-key
+        msbuild --% /t:build /p:RunOctopack=true /p:OctoPackPublishPackageToHttp=http://devpccloud.cloudapp.net/nuget/packages /p:OctoPackPublishApiKey=API-9DUCGSPLW1AHA4LBQZSHWBS8BS
   
 
   before_build:
